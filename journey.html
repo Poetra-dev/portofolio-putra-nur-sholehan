@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey</title>
+    <style>
+        :root {
+            --primary: #8A2BE2;    /* Vibrant purple */
+            --secondary: #00CED1;   /* Turquoise */
+            --accent: #FF6B6B;     /* Coral */
+            --dark: #1A1A2E;       /* Deep navy */
+            --darker: #16213E;      /* Darker navy */
+            --light: #E6F5FF;      /* Light blue */
+            --text: #CCD6F6;       /* Soft blue-gray */
+            --highlight: #FF9E7D;  /* Peach */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--darker), var(--primary));
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            border: 4px solid var(--secondary);
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 206, 209, 0.5);
+            transition: transform 0.3s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .profile-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
+        
+        .profile-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 768px) {
+            .tagline {
+                font-size: 1.2rem;
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        
+        .experience-card {
+            padding: 1.2rem;
+            position: relative;
+            background: var(--darker);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: calc(50% - 2rem);
+        }
+        
+        @media (max-width: 768px) {
+            .experience-card {
+                width: calc(100% - 2rem);
+                margin-left: 2rem;
+            }
+        }
+        
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .experience-card:nth-child(odd) {
+            left: 0;
+        }
+        
+        .experience-card:nth-child(even) {
+            left: calc(50% + 2rem);
+        }
+        
+        @media (max-width: 768px) {
+            .experience-card:nth-child(even) {
+                left: 0;
+            }
+        }
+        
+        .experience-card::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--highlight);
+            border-radius: 50%;
+            top: 1.5rem;
+            box-shadow: 0 0 0 4px var(--primary);
+        }
+        
+        .experience-card:nth-child(odd)::after {
+            right: -8px;
+        }
+        
+        .experience-card:nth-child(even)::after {
+            left: -8px;
+        }
+        
+        @media (max-width: 768px) {
+            .experience-card::after {
+                left: -8px;
+                width: 14px;
+                height: 14px;
+            }
+            
+            .timeline::before {
+                left: 2rem;
+            }
+        }
+        
+        .experience-date {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .experience-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        @media (min-width: 768px) {
+            .experience-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        .experience-org {
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .experience-desc {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        @media (min-width: 768px) {
+            .experience-desc {
+                font-size: 1rem;
+            }
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .skill-tag {
+            background: rgba(138, 43, 226, 0.2);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            border: 1px solid var(--primary);
+        }
+        
+        @media (min-width: 768px) {
+            .skill-tag {
+                font-size: 0.8rem;
+            }
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 600px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .gallery-item {
+                height: 200px;
+            }
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.8);
+            color: white;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .testimonial-section {
+            background: var(--darker);
+            padding: 2rem 1rem;
+            margin: 3rem 0;
+            border-radius: 8px;
+        }
+        
+        @media (min-width: 768px) {
+            .testimonial-section {
+                padding: 3rem 2rem;
+            }
+        }
+        
+        .testimonial {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-style: italic;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        
+        @media (min-width: 768px) {
+            .testimonial {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .testimonial::before,
+        .testimonial::after {
+            content: '"';
+            font-size: 2rem;
+            color: var(--accent);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .testimonial::before {
+            top: -1rem;
+            left: -0.5rem;
+        }
+        
+        .testimonial::after {
+            bottom: -2rem;
+            right: -0.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .testimonial::before,
+            .testimonial::after {
+                font-size: 3rem;
+            }
+            
+            .testimonial::before {
+                left: -1rem;
+            }
+            
+            .testimonial::after {
+                right: -1rem;
+            }
+        }
+        
+        .testimonial-author {
+            margin-top: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        @media (min-width: 768px) {
+            .testimonial-author {
+                font-size: 1rem;
+            }
+        }
+        
+        .testimonial-role {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--darker);
+            margin-top: 3rem;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="profile-container">
+            <!-- Replace with your actual profile image -->
+            <img src="imgjourney/avatar.png" alt="Profile Picture" class="profile-pic">
+        </div>
+        <h1>My Journey</h1>
+        <p class="tagline">Tampilan dinamis dari pengalaman organisasi dan perjalanan selama praktik kerja lapangan</p>
+    </header>
+    
+    <div class="container">
+        <section id="organizational">
+            <h2 class="section-title">Organizational Experience</h2>
+            
+            <div class="timeline">
+                <!-- Experience 1 -->
+                <div class="experience-card animate">
+                    <div class="experience-date">July 2023 - July 2024</div>
+                    <h3 class="experience-title">Sekretaris 1</h3>
+                    <div class="experience-org">Gerakan Kepanduan Hizbul Wathan SMK Muhammadiyah Paguyangan</div>
+                    <p class="experience-desc">
+                        Terlibat dalam pengelolaan surat-menyurat dan penyusunan proposal kegiatan. Juga ikut serta dalam berbagai kegiatan Kepanduan, baik di dalam ruangan maupun di luar ruangan.
+                    </p>
+                    <div class="skills-container">
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">Event Planning</span>
+                        <span class="skill-tag">Public Speaking</span>
+                        <span class="skill-tag">Team Management</span>
+                    </div>
+                </div>
+                
+                <!-- Experience 2 -->
+                <div class="experience-card animate delay-1">
+                    <div class="experience-date">Maret 2022 - Maret 2024</div>
+                    <h3 class="experience-title">Anggota Bidang Perkaderan</h3>
+                    <div class="experience-org">Pimpinan Cabang Ikatan Pelajar Muhammadiyah Pekuncen</div>
+                    <p class="experience-desc">
+                        Aktif mengikuti kegiatan organisasi di lingkungan internal maupun eksternal. Sering dilibatkan sebagai fasilitator dalam sejumlah program kerja bidang perkaderan.
+                    </p>
+                    <div class="skills-container">
+                        <span class="skill-tag">Team Management</span>
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">Public Speaking</span>
+                    </div>
+                </div>
+                
+                <!-- Experience 3 -->
+                <div class="experience-card animate delay-2">
+                    <div class="experience-date">December 2023 - Present</div>
+                    <h3 class="experience-title">Anggota Bidang Pengembangan, Penelitian & Evaluasi</h3>
+                    <div class="experience-org">Dewan Sugli Daerah Hizbul Wathan Kabupaten Brebes</div>
+                    <p class="experience-desc">
+                        Bertugas dalam proses evaluasi kegiatan serta membantu pengembangan program di Hizbul Wathan tingkat daerah. Terlibat langsung dalam berbagai agenda kerja, baik internal maupun eksternal.
+                    </p>
+                    <div class="skills-container">
+                        <span class="skill-tag">Public Speaking</span>
+                        <span class="skill-tag">Event Planning</span>
+                        <span class="skill-tag">Leadership</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="internship">
+            <h2 class="section-title">On the job training Experience</h2>
+            
+            <div class="timeline">
+                <!-- Internship 1 -->
+                <div class="experience-card animate">
+                    <div class="experience-date">July 2024 - Agustus 2024</div>
+                    <h3 class="experience-title">Cleaner & Cashier</h3>
+                    <div class="experience-org">Cahaya Computer</div>
+                    <p class="experience-desc">
+                        Melakukan perawatan dan pembersihan perangkat seperti laptop dan printer. Juga mendapat pelatihan sebagai kasir untuk melayani pelanggan secara langsung.
+                    </p>
+                    <div class="skills-container">
+                        <span class="skill-tag">Electronics Cleaner</span>
+                        <span class="skill-tag">Repairing Printer</span>
+                        <span class="skill-tag">Cashier Store</span>
+                        <span class="skill-tag">Package Fetcher</span>
+                    </div>
+                </div>
+                
+                <!-- Internship 2 -->
+                <div class="experience-card animate delay-1">
+                    <div class="experience-date">Agustus 2024 - September 2024</div>
+                    <h3 class="experience-title">Public Service</h3>
+                    <div class="experience-org">Pemerintah Desa Krajan</div>
+                    <p class="experience-desc">
+                        Membantu perangkat desa dalam menangani administrasi masyarakat dan menerima berbagai keluhan warga untuk ditindaklanjuti.
+                    </p>
+                    <div class="skills-container">
+                        <span class="skill-tag">Public Speaking</span>
+                        <span class="skill-tag">Word</span>
+                        <span class="skill-tag">Excel</span>
+                        <span class="skill-tag">Database</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="gallery">
+            <h2 class="section-title">Moments & Achievements</h2>
+            
+            <div class="gallery">
+                <!-- Replace with your actual images and captions -->
+                <div class="gallery-item animate">
+                    <img src="imgjourney/img1.jpg" alt="Team photo" class="gallery-img">
+                    <div class="gallery-caption">Menjadi instruktur danton saat ekstrakulikuler Hizbul Wathan</div>
+                </div>
+                
+                <div class="gallery-item animate delay-1">
+                    <img src="imgjourney/img2.jpg" alt="Team photo" class="gallery-img">
+                    <div class="gallery-caption">Mengikuti Taruna Melati 2 di SMP Muhammadiyah Sokaraja</div>
+                </div>
+                
+                <div class="gallery-item animate delay-2">
+                    <img src="imgjourney/img3.jpg" alt="Team photo" class="gallery-img">
+                    <div class="gallery-caption">Ikut serta dalam kegiatan Tadabbur Alam di Paguyangan</div>
+                </div>
+                
+                <div class="gallery-item animate delay-3">
+                    <img src="imgjourney/img4.jpg" alt="Team photo" class="gallery-img">
+                    <div class="gallery-caption">Membimbing peserta SKT 2 Hizbul Wathan saat berlangsungnya kegiatan api unggun.</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="testimonial-section animate">
+            <h2 class="section-title">My Motivation</h2>
+            
+            <div class="testimonial">
+                <p>
+                    "Gagal bukan akhir, tapi sinyal buat belok sebentar. Kalau semua rencana nggak jalan, mungkin sekarang saatnya bikin rencana baru, versi aku yang udah belajar dari semua luka."
+                </p>
+                <div class="testimonial-author">Putra Nur Sholehan</div>
+                <div class="testimonial-role">Pemuda dengan semangat mimpi dan belajar</div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p class="copyright">© 2025 My Journey. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Simple animation trigger on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(element);
+            });
+            
+            // Gallery hover effect
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            galleryItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    item.querySelector('.gallery-caption').style.transform = 'translateY(0)';
+                });
+                item.addEventListener('mouseleave', () => {
+                    item.querySelector('.gallery-caption').style.transform = 'translateY(100%)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

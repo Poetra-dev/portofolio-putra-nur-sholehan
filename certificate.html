@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+    <style>
+        :root {
+            --primary: #8A2BE2;    /* Vibrant purple */
+            --secondary: #00CED1;   /* Turquoise */
+            --accent: #FF6B6B;     /* Coral */
+            --dark: #1A1A2E;       /* Deep navy */
+            --darker: #16213E;      /* Darker navy */
+            --light: #E6F5FF;      /* Light blue */
+            --text: #CCD6F6;       /* Soft blue-gray */
+            --highlight: #FF9E7D;  /* Peach */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        h1 {
+            color: var(--highlight);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        .certificate-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .certificate-card {
+            background: linear-gradient(135deg, var(--dark), var(--darker));
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .certificate-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .certificate-issuer {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .certificate-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .certificate-description {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .view-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .view-btn:hover {
+            background-color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .certificate-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Modal untuk tampilan sertifikat */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--dark);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .certificate-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Certificate</h1>
+        <p class="subtitle">Beberapa bukti perjalanan belajar dan pengalaman yang pernah aku ikuti</p>
+    </header>
+
+    <main class="certificate-container">
+        <!-- Contoh sertifikat 1 -->
+        <div class="certificate-card">
+            <h2 class="certificate-title">Sertifikat Peserta Olimpiade Pelajar Nasional</h2>
+            <p class="certificate-issuer">Yapresindo</p>
+            <p class="certificate-date">Diperoleh: September 2024</p>
+            <p class="certificate-description">Ikut berpartisipasi dalam lomba tingkat nasional pada mata pelajaran Sejarah.</p>
+            <button class="view-btn" onclick="openModal('imagescerti/cert1.jpg')">View certificate</button>
+        </div>
+
+        <!-- Contoh sertifikat 2 -->
+        <div class="certificate-card">
+            <h2 class="certificate-title">Sertifikat Peserta Pelatihan Dakwah Pelajar Muhammadiyah</h2>
+            <p class="certificate-issuer">PC IPM Paguyangan</p>
+            <p class="certificate-date">Diperoleh: February 2023</p>
+            <p class="certificate-description">Ikut serta dan aktif dalam kegiatan pelatihan dakwah untuk pelajar Muhammadiyah.</p>
+            <button class="view-btn" onclick="openModal('imagescerti/cert2.jpg')">View certificate</button>
+        </div>
+
+        <!-- Contoh sertifikat 3 -->
+        <div class="certificate-card">
+            <h2 class="certificate-title">Sertifikat Peserta Pelatihan Kader Taruna Melati 2</h2>
+            <p class="certificate-issuer">PD IPM Banyumas</p>
+            <p class="certificate-date">Diperoleh: 2024</p>
+            <p class="certificate-description">Mengikuti kegiatan pelatihan kader taruna melati 2 sebagai bagian dari pengembangan diri dalam organisasi IPM.</p>
+            <button class="view-btn" onclick="openModal('imagescerti/cert3.jpg')">View certificate</button>
+        </div>
+
+        <!-- Contoh sertifikat 4 -->
+        <div class="certificate-card">
+            <h2 class="certificate-title">Sertifikat Partisipasi Kunjungan Industri</h2>
+            <p class="certificate-issuer">Gamelab Indonesia</p>
+            <p class="certificate-date">Diperoleh: February 2023</p>
+            <p class="certificate-description">Ikut serta dalam kunjungan industri ke PT Educa Sisfomedia Indonesia untuk mengenal dunia kerja dan industri teknologi.</p>
+            <button class="view-btn" onclick="openModal('imagescerti/cert4.jpg')">View certificate</button>
+        </div>
+
+        <!-- Tambahkan sertifikat lainnya di sini -->
+    </main>
+
+    <!-- Modal untuk menampilkan gambar sertifikat -->
+    <div id="certificateModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <img id="modalImage" class="certificate-img" src="" alt="Sertifikat">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Certificate Collection. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Fungsi untuk membuka modal
+        function openModal(imageSrc) {
+            const modal = document.getElementById('certificateModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            modal.style.display = 'flex';
+            modalImg.src = imageSrc;
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            document.getElementById('certificateModal').style.display = 'none';
+        }
+
+        // Tutup modal ketika mengklik di luar gambar
+        window.onclick = function(event) {
+            const modal = document.getElementById('certificateModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
